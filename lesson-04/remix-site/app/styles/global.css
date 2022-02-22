@@ -11,6 +11,8 @@ a {
   text-decoration: none;
 }
 
+/* Header --------------------------------------------------------- */
+
 .container {
   max-width: calc(2 * var(--size-15));
   margin: 0 auto;
@@ -32,4 +34,24 @@ a {
   color: var(--gray-4);
   font-weight: var(--font-weight-7);
   font-size: var(--font-size-2);
+}
+
+/* Components ----------------------------------------------------- */
+
+.button {
+  border: none;
+  padding: var(--size-3) var(--size-8);
+  font-size: var(--font-size-3);
+  color: var(--gray-0);
+  background-color: var(--blue-6);
+  font-weight: var(--font-weight-6);
+  border-radius: var(--radius-2);
+  text-align: center;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: var(--size-3) 0;
 }

@@ -1,5 +1,7 @@
 import { Link, useLoaderData } from "remix";
 import db from "~/db/db.server.js";
+import Button from "~/components/Button.jsx";
+import PageHeader from "~/components/PageHeader";
 import styles from "~/styles/RecipeItems.css";
 
 export async function loader() {
@@ -20,12 +22,9 @@ export default function RecipeItems() {
 
   return (
     <div>
-      <div className="page-header">
-        <h1>Recipes</h1>
-        <Link to="/recipes/new" className="btn">
-          New recipe
-        </Link>
-      </div>
+      <PageHeader title="Recipes">
+        <Button to="/recipes/new">New recipe</Button>
+      </PageHeader>
       <ul className="posts-list">
         {recipes.map((recipe) => (
           <li key={recipe.id}>

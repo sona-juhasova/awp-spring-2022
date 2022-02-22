@@ -20,13 +20,3 @@ h1 {
 .create {
   color: var(--yellow-5);
 }
-
-.button {
-  padding: var(--size-3) var(--size-8);
-  font-size: var(--font-size-3);
-  color: var(--gray-0);
-  background-color: var(--blue-6);
-  font-weight: var(--font-weight-6);
-  border-radius: var(--radius-2);
-  text-align: center;
-}

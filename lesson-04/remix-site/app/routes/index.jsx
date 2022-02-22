@@ -1,4 +1,4 @@
-import { Link } from "remix";
+import Button from "~/components/Button.jsx";
 import styles from "~/styles/Home.css";
 
 export function links() {
@@ -18,9 +18,7 @@ export default function Home() {
         <span className="modern">modern</span> techniques, you are simply going
         to <span className="create">create better dishes</span>
       </h1>
-      <Link className="button" to="/recipes">
-        Get Started
-      </Link>
+      <Button to="/recipes">Get Started</Button>
     </section>
   );
 }
