@@ -1,8 +1,18 @@
 import { Link, useLoaderData } from "remix";
 import db from "~/db/db.server.js";
+import styles from "~/styles/RecipeItems.css";
 
 export async function loader() {
   return db.data.recipes;
+}
+
+export function links() {
+  return [
+    {
+      rel: "stylesheet",
+      href: styles,
+    },
+  ];
 }
 
 export default function RecipeItems() {
