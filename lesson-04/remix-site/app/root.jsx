@@ -34,7 +34,6 @@ function Document({ children, title }) {
         <title>{title}</title>
       </head>
       <body>
-        <h1>Remix Blog</h1>
         {children}
         {process.env.NODE_ENV === "development" ? <LiveReload /> : null}
         <Scripts />
