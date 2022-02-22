@@ -36,6 +36,34 @@ a {
   font-size: var(--font-size-2);
 }
 
+/* Content -------------------------------------------------------- */
+
+.page-content {
+  line-height: var(--font-lineheight-2);
+  margin-bottom: var(--size-5);
+}
+
+/* Forms ---------------------------------------------------------- */
+
+label {
+  display: block;
+  margin-top: var(--size-2);
+  margin-bottom: var(--size-1);
+  color: var(--gray-5);
+  font-weight: var(--font-weight-7);
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  max-width: var(--size-15);
+  padding: var(--size-2);
+  font-size: var(--font-size-2);
+  border-radius: var(--radius-1);
+  border: var(--border-size-1) solid var(--gray-5);
+  margin-bottom: var(--size-2);
+}
+
 /* Components ----------------------------------------------------- */
 
 .button {
@@ -47,6 +75,10 @@ a {
   font-weight: var(--font-weight-6);
   border-radius: var(--radius-2);
   text-align: center;
+}
+
+.button.button-destructive {
+  background-color: var(--red-6);
 }
 
 .page-header {
