@@ -1,12 +1,11 @@
 import { Link, redirect } from "remix";
-import createDb from "~/db/db.server";
+import db from "~/db/db.server";
 
 export const action = async ({ request }) => {
   const form = await request.formData();
   const title = form.get("title");
   const body = form.get("body");
 
-  const db = await createDb();
   const uuid = new Date().getTime().toString(16);
   db.data.posts.push({ id: uuid, title, body });
   db.write();

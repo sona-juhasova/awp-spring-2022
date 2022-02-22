@@ -1,9 +1,8 @@
 import { Link, redirect } from "remix";
 import { useLoaderData } from "remix";
-import createDb from "~/db/db.server";
+import db from "~/db/db.server";
 
 export const loader = async function ({ params }) {
-  const db = await createDb();
   const post = db.data.posts.find((p) => p.id === params.postId);
 
   if (!post) {
@@ -17,7 +16,6 @@ export const loader = async function ({ params }) {
 export const action = async function ({ request, params }) {
   const form = await request.formData();
   if (form.get("_method") === "delete") {
-    const db = await createDb();
     db.data.posts = db.data.posts.filter((p) => p.id !== params.postId);
     db.write();
     return redirect("/posts");

@@ -1,8 +1,7 @@
 import { Link, useLoaderData } from "remix";
-import createDb from "~/db/db.server.js";
+import db from "~/db/db.server.js";
 
 export async function loader() {
-  const db = await createDb();
   return db.data.posts;
 }
 

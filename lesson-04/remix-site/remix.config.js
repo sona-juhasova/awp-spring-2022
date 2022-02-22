@@ -9,4 +9,5 @@ module.exports = {
   devServerPort: 8002,
   ignoredRouteFiles: [".*"],
   serverBuildTarget: "node-cjs",
+  serverDependenciesToBundle: ["lowdb", "steno"],
 };
