@@ -50,12 +50,14 @@ function Document({ children, title }) {
 function Layout({ children }) {
   return (
     <>
-      <nav className="navbar">
-        <Link to="/" className="logo">
+      <nav className="flex justify-between py-5 px-7">
+        <Link to="/" className="font-extrabold text-2xl text-white">
           Remixed Recipes
         </Link>
-        <div className="nav">
-          <Link to="/recipes">Recipes</Link>
+        <div>
+          <Link to="/recipes" className="font-bold text-lg text-gray-400">
+            Recipes
+          </Link>
         </div>
       </nav>
       <div className="container">{children}</div>
