@@ -1,7 +1,12 @@
 import { Link, Outlet, LiveReload, Links, Meta, Scripts } from "remix";
 import globalStylesUrl from "~/styles/global.css";
+import styles from "~/tailwind.css";
 
 export const links = () => [
+  {
+    rel: "stylesheet",
+    href: styles,
+  },
   {
     rel: "stylesheet",
     href: globalStylesUrl,
