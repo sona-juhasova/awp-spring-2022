@@ -2,18 +2,41 @@
   "posts": [
     {
       "id": "1",
-      "title": "Post 1",
-      "body": "This is test post #1"
+      "title": "Recipes 1",
+      "ingredients": [
+        "potatoes",
+        "onion"
+      ],
+      "body": "This is test Recipes #1"
     },
     {
       "id": "2",
-      "title": "Post 2",
-      "body": "This is test post #2"
+      "title": "Recipes 2",
+      "ingredients": "milk, banana",
+      "body": "This is test Recipes #2"
     },
     {
       "id": "3",
-      "title": "Post 3",
-      "body": "This is test post #3"
+      "title": "Recipes 3",
+      "ingredients": "rice, fish",
+      "body": "This is test Recipes #3"
+    },
+    {
+      "id": "17f25bb2938",
+      "title": "recipe 4 title",
+      "ingredients": "recipe 4 ingredietns\r\n",
+      "body": "recipe 4 description\r\n"
+    },
+    {
+      "id": "17f25e5f8b6",
+      "title": "tt",
+      "ingredients": [
+        "ff",
+        " k ",
+        " l",
+        " l"
+      ],
+      "body": "fff"
     }
   ]
 }

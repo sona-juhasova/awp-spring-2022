@@ -6,7 +6,7 @@ export const loader = async function ({ params }) {
   const post = db.data.posts.find((p) => p.id === params.postId);
 
   if (!post) {
-    throw new Error("Post not found");
+    throw new Error("Recipe not found");
   }
   return {
     post,
@@ -22,8 +22,15 @@ export const action = async function ({ request, params }) {
   }
 };
 
+
+
 export default function Post() {
   const { post } = useLoaderData();
+
+  const ingredientsListed = post.ingredients.map(ingredient => {
+    return <li>{ingredient}</li>;
+  });
+
 
   return (
     <div>
@@ -33,6 +40,7 @@ export default function Post() {
           Back
         </Link>
       </div>
+      <ul className="page-content">{ingredientsListed}</ul>
       <p className="page-content">{post.body}</p>
       <div className="page-footer">
         <form method="post">
