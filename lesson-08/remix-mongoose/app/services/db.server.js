@@ -1,47 +1,48 @@
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
-const DATABASE_NAME = "shop";
+// Hat tip: https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/lib/dbConnect.js
 
-let db;
+const { MONGODB_URL, NODE_ENV } = process.env;
 
-export async function getDb() {
-  if (db) return db;
-
-  let client = new MongoClient(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-  });
-
-  if (process.env.NODE_ENV === "production") {
-    await client
-      .connect()
-      .then(() => {
-        console.log("MONGODB connected, production");
-      })
-      .catch(() => {
-        console.error("MONGODB connection FAILED, production");
-      });
-    db = client.db(DATABASE_NAME);
+if (!MONGODB_URL) {
+  if (NODE_ENV === "production") {
+    throw new Error(
+      "Please define the MONGODB_URL environment variable — pointing to your full connection string, including database name."
+    );
   } else {
-    // in development, need to store the db connection in a global variable
-    // this is because the dev server purges the require cache on every request
-    // and will cause multiple connections to be made
-    if (!global.__client) {
-      global.__client = client;
-      await global.__client
-        .connect()
-        .then(() => {
-          console.log("MONGODB connected, development");
-        })
-        .catch(() => {
-          console.error("MONGODB connection FAILED, development");
-        });
-    }
-    db = global.__client.db(DATABASE_NAME);
+    throw new Error(
+      "Please define the MONGODB_URL environment variable inside an .env file — pointing to your full connection string, including database name."
+    );
   }
-  return db;
 }
 
-export async function getCollection(collectionName) {
-  const db = await getDb();
-  return db.collection(collectionName);
+/**
+ * Global variable is used here to maintain a cached connection across hot reloads
+ * in development so we don't open multiple connections.
+ */
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
+
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const options = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URL, options).then((mongoose) => {
+      console.log("Mongoose connected in %s", NODE_ENV);
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
+export default dbConnect;

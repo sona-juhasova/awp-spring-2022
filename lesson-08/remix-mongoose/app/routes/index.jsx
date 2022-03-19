@@ -1,9 +1,11 @@
 import { useLoaderData } from "remix";
-import { getCollection } from "~/services/db.server.js";
+import dbConnect from "~/services/db.server.js";
+import { Book } from "~/models";
 
 export async function loader() {
-  const books = await getCollection("books");
-  return books.find().toArray();
+  await dbConnect();
+  const books = await Book.find();
+  return books;
 }
 
 export default function Index() {
