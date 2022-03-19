@@ -1,5 +1,6 @@
 import {
   Links,
+  Link,
   LiveReload,
   Meta,
   Outlet,
@@ -31,6 +32,11 @@ export default function App() {
         <Links />
       </head>
       <body className="bg-slate-100 text-slate-800 font-sans p-4">
+        <header className="pb-3 mb-4 border-b-2">
+          <Link to="/" className="hover:underline text-blue-600">
+            Home
+          </Link>
+        </header>
         <Outlet />
         <ScrollRestoration />
         <Scripts />

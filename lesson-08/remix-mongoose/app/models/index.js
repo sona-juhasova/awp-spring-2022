@@ -5,6 +5,4 @@ const bookSchema = mongoose.Schema({
 });
 
 // Avoid redefining models during hot reloads in development
-export default {
-  Book: mongoose.models.Book ?? mongoose.model("Book", bookSchema),
-};
+export const Book = mongoose.models.Book ?? mongoose.model("Book", bookSchema);
