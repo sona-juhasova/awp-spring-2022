@@ -1,5 +1,5 @@
 import { useLoaderData, Link } from "remix";
-import dbConnect from "~/services/db.server.js";
+import dbConnect from "~/db/db.server.js";
 
 export async function loader() {
   const db = await dbConnect();

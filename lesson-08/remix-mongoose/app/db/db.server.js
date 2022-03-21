@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { bookSchema } from "~/models";
+import { models } from "./models.js";
 
 const { MONGODB_URL, NODE_ENV } = process.env;
 
@@ -18,14 +18,14 @@ if (!MONGODB_URL) {
 // We reuse any existing Mongoose db connection to avoid creating multiple
 // connections in dev mode when Remix "purges the require cache" when reloading
 // on file changes.
-async function dbConnect() {
-  // Reuse the existing Mongoose connection...
+export default async function dbConnect() {
+  // Reuse the existing Mongoose connection if we have one...
   if (mongoose.connection?.readyState > 0) {
     return mongoose.connection;
   }
 
   // ...or create a new connection:
-  const connection = await mongoose
+  const conn = await mongoose
     .connect(MONGODB_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
@@ -35,12 +35,12 @@ async function dbConnect() {
       return connection;
     });
 
-  // "Models are *always* scoped to a single connection." So we set them up
-  // here to avoid overwriting them and getting errors in dev mode.
+  // "Models are always scoped to a single connection."
   // https://mongoosejs.com/docs/connections.html#multiple_connections
-  connection.model("Book", bookSchema);
+  // So we set them up here to avoid overwriting and getting errors in dev mode.
+  for (const model of models) {
+    conn.model(model.name, model.schema, model.collection);
+  }
 
-  return connection;
+  return conn;
 }
-
-export default dbConnect;
