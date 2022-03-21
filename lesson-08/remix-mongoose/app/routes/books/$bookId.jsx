@@ -1,10 +1,9 @@
 import { useLoaderData } from "remix";
 import dbConnect from "~/services/db.server.js";
-import { Book } from "~/models";
 
 export async function loader({ params }) {
-  await dbConnect();
-  return Book.findById(params.bookId);
+  const db = await dbConnect();
+  return db.models.Book.findById(params.bookId);
 }
 
 export default function BookPage() {

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-
-// Hat tip: https://github.com/vercel/next.js/blob/canary/examples/with-mongodb-mongoose/lib/dbConnect.js
+import { bookSchema } from "~/models";
 
 const { MONGODB_URL, NODE_ENV } = process.env;
 
@@ -16,33 +15,32 @@ if (!MONGODB_URL) {
   }
 }
 
-/**
- * Global variable is used here to maintain a cached connection across hot reloads
- * in development so we don't open multiple connections.
- */
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
+// We reuse any existing Mongoose db connection to avoid creating multiple
+// connections in dev mode when Remix "purges the require cache" when reloading
+// on file changes.
 async function dbConnect() {
-  if (cached.conn) {
-    return cached.conn;
+  // Reuse the existing Mongoose connection...
+  if (mongoose.connection?.readyState > 0) {
+    return mongoose.connection;
   }
 
-  if (!cached.promise) {
-    const options = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URL, options).then((mongoose) => {
+  // ...or create a new connection:
+  const connection = await mongoose
+    .connect(MONGODB_URL, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    })
+    .then((connection) => {
       console.log("Mongoose connected in %s", NODE_ENV);
-      return mongoose;
+      return connection;
     });
-  }
-  cached.conn = await cached.promise;
-  return cached.conn;
+
+  // "Models are *always* scoped to a single connection." So we set them up
+  // here to avoid overwriting them and getting errors in dev mode.
+  // https://mongoosejs.com/docs/connections.html#multiple_connections
+  connection.model("Book", bookSchema);
+
+  return connection;
 }
 
 export default dbConnect;
