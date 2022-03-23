@@ -4,6 +4,9 @@ const { Schema } = mongoose;
 
 const bookSchema = new Schema({
   title: String,
+  author: String,
+  price: Number
+
 });
 
 export const models = [
