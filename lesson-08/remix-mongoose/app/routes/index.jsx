@@ -25,6 +25,7 @@ export default function Index() {
                 className="text-blue-600 hover:underline">
                 {book.title}
               </Link>
+              <p>written by {book.author}</p>
             </li>
           );
         })}
