@@ -15,25 +15,29 @@ if (!MONGODB_URL) {
   }
 }
 
+// Log events
+mongoose.connection.on("connected", () => {
+  console.log("Mongoose connected, NODE_ENV=%s", NODE_ENV);
+});
+
+mongoose.connection.on("disconnected", () => {
+  console.log("Mongoose DISCONNECTED, NODE_ENV=%s", NODE_ENV);
+});
+
 // We reuse any existing Mongoose db connection to avoid creating multiple
 // connections in dev mode when Remix "purges the require cache" when reloading
 // on file changes.
 export default async function connectDb() {
   // Reuse the existing Mongoose connection if we have one...
-  if (mongoose.connection?.readyState > 0) {
+  if (mongoose.connection.readyState > 0) {
     return mongoose.connection;
   }
 
   // ...or create a new connection:
-  const conn = await mongoose
-    .connect(MONGODB_URL, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    })
-    .then((connection) => {
-      console.log("Mongoose connected in %s", NODE_ENV);
-      return connection;
-    });
+  const conn = await mongoose.connect(MONGODB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  });
 
   // "Models are always scoped to a single connection."
   // https://mongoosejs.com/docs/connections.html#multiple_connections
